@@ -14,7 +14,8 @@ class Controller:
         
         f = open('dictionary_spanish.txt', 'r')
 
-        listaWords = f.read().split("\n")
+        listaWords = f.read().lower().split("\n")
+        self.supposedWord = ""
 
         f.close()
         return listaWords
@@ -33,7 +34,7 @@ class Controller:
             t = time.time()
 
             listLetterInBadPosition = []
-            
+            dictLetterInBadPosition = dict()
             letterInGoodPosition = dict()
             listLetterInGoodPosition = []
             letterInRegularPosition = dict()
@@ -43,13 +44,14 @@ class Controller:
             for index, char in enumerate(wordAttemp):
                 if ( blockCode[index].__eq__(BAD)):
                     listLetterInBadPosition.append(char)
+                    dictLetterInBadPosition[index] = char
                 elif ( blockCode[index].__eq__(GOOD)):
                     letterInGoodPosition[index] = char
                     listLetterInGoodPosition.append(char)
                 elif ( blockCode[index].__eq__(REGULAR)):
                     letterInRegularPosition[index] = char
                     regularLetterList.append(char)
-                
+
             lenOriginal = len(self.listWords)
             originalList = self.listWords.copy()
 
@@ -66,16 +68,26 @@ class Controller:
                         if (letterInGoodPosition.get(indexLetter) != letter):
                             deleted= True
                             break
+                        
                 
                     #Regular
-                    if ( letterInRegularPosition.__contains__(indexLetter)):
+                    elif ( letterInRegularPosition.__contains__(indexLetter)):
                         if(letterInRegularPosition.get(indexLetter) == letter):
                             deleted = True
                             break
                     
-                    
-                    if (letter in listLetterInBadPosition and not letter in regularLetterList and not letter in listLetterInGoodPosition) :
-                        deleted = True
+                    #TODO Mejorar doble caracter bad, KEY OPERA -> LLAVE, ACEDA, ABAJA
+                    if (letter in listLetterInBadPosition):
+                            if(letter in listLetterInGoodPosition):
+                               if (word.count(letter)  >   listLetterInGoodPosition.count(letter)):
+                                deleted = True
+                                break
+                            else:
+                                deleted  = True
+                                break
+                                
+
+                        
                     
                 for rword in regularLetterList:
                     if not rword in word:

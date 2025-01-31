@@ -1,3 +1,4 @@
+aceda
 abaca
 abaco
 abada
@@ -29,7 +30,6 @@ abofe
 abofo
 aboga
 abogo
-abola
 aboli
 abolo
 abona
@@ -1174,11 +1174,9 @@ babea
 babee
 babel
 babeo
-Babia
 bable
 babor
 bacan
-bacha
 bache
 bacia
 bacin
@@ -2285,7 +2283,6 @@ cochi
 cocho
 cocia
 cocio
-cocoa
 cocol
 cocuy
 codal
@@ -2359,7 +2356,6 @@ comia
 comic
 comio
 comis
-compa
 compi
 comta
 comto
@@ -2408,7 +2404,6 @@ corda
 corea
 coree
 coreo
-Coria
 corio
 corla
 corle
@@ -2971,7 +2966,6 @@ durar
 duras
 duren
 dures
-eagle
 ebano
 ebola
 ebria
