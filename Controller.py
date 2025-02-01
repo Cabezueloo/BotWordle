@@ -2,6 +2,10 @@
 '''
 import time
 
+
+from colorama import Fore, Back, Style
+
+
 BAD = 'b'
 GOOD = 'g'
 REGULAR = 'r'
@@ -12,7 +16,7 @@ class Controller:
     def createList(self) -> list:
         
         
-        f = open('dictionary_spanish.txt', 'r')
+        f = open('dictionary.txt', 'r')
 
         listaWords = f.read().lower().split("\n")
         self.supposedWord = ""
@@ -21,13 +25,16 @@ class Controller:
         return listaWords
     
     def __init__(self):
+       pass
+    
+    def newGame(self):
         self.listWords = self.createList()
-        
-           
+        self.loop()
+
     def loop(self):
         
-        wordAttemp = input("Word -> ").lower()
-        blockCode : str = input("G/R/B -> ").lower()
+        wordAttemp = input("Firs Word -> ").lower()
+        blockCode : str = input(f"{Fore.GREEN}G{Style.RESET_ALL}/{Fore.YELLOW}R{Style.RESET_ALL}/{Fore.RED}B {Style.RESET_ALL}-> ").lower()
         
         while True:
 
@@ -38,6 +45,7 @@ class Controller:
             letterInGoodPosition = dict()
             listLetterInGoodPosition = []
             letterInRegularPosition = dict()
+            
             
             regularLetterList = []
             
@@ -82,6 +90,10 @@ class Controller:
                                if (word.count(letter)  >   listLetterInGoodPosition.count(letter)):
                                 deleted = True
                                 break
+                            elif(letter in regularLetterList):
+                                if (word.count(letter)  >   regularLetterList.count(letter)):
+                                    deleted = True
+                                    break
                             else:
                                 deleted  = True
                                 break
@@ -94,19 +106,14 @@ class Controller:
                         deleted = True
                         break
 
-
-                
                 if deleted:
                     self.listWords.remove(word)
 
             print(f"Tiempo en recorrer y comprobar todo el diccionario -> {time.time() - t }")
             print(f"Tamagno antes de iterar -> {lenOriginal}" )
             print(f"Tamagno despues de iterar -> {len(self.listWords)}" )
-            print(f"Existe todos -> {(self.listWords.__contains__("todos"))}" )
-            #check : str= input("Check:")
-
-            #if (check != ""):
-             #   print(self.listWords.__contains__(check))
+            
+            
             
             if(self.listWords.__contains__(wordAttemp)):
                 self.listWords.remove(wordAttemp)
@@ -115,15 +122,18 @@ class Controller:
 
 
             print(f"Try -> {wordAttemp}")
+            
 
-
-            blockCode : str = input("G/R/B -> ").lower()
+            blockCode : str = input(f"{Fore.GREEN}G{Style.RESET_ALL}/{Fore.YELLOW}R{Style.RESET_ALL}/{Fore.RED}B {Style.RESET_ALL}-> ").lower()
+            if blockCode.__eq__("exit"):
+                self.newGame()
+            
         
             
 
 
 controller = Controller()
 
-controller.loop()
+controller.newGame()
 
     
