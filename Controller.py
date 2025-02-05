@@ -16,7 +16,7 @@ class Controller:
     def createList(self) -> list:
         
         
-        f = open('dictionary.txt', 'r')
+        f = open('dictionary_spanish.txt', 'r')
 
         listaWords = f.read().lower().split("\n")
         self.supposedWord = ""
@@ -40,31 +40,30 @@ class Controller:
 
             t = time.time()
 
-            listLetterInBadPosition = []
-            dictLetterInBadPosition = dict()
+            listBadLetter = []
             letterInGoodPosition = dict()
-            listLetterInGoodPosition = []
+            listGoodLetter = []
             letterInRegularPosition = dict()
             
             
-            regularLetterList = []
+            listReguarLetter = []
             
             for index, char in enumerate(wordAttemp):
                 if ( blockCode[index].__eq__(BAD)):
-                    listLetterInBadPosition.append(char)
-                    dictLetterInBadPosition[index] = char
+                    listBadLetter.append(char)
+                    
                 elif ( blockCode[index].__eq__(GOOD)):
                     letterInGoodPosition[index] = char
-                    listLetterInGoodPosition.append(char)
+                    listGoodLetter.append(char)
                 elif ( blockCode[index].__eq__(REGULAR)):
                     letterInRegularPosition[index] = char
-                    regularLetterList.append(char)
+                    listReguarLetter.append(char)
 
             lenOriginal = len(self.listWords)
             originalList = self.listWords.copy()
 
 
-            #For in all the words dicitonaray
+            #For all the words in dicitonaray
             for index, word in enumerate(originalList):
                 deleted = False
                 
@@ -72,36 +71,29 @@ class Controller:
                 for indexLetter, letter in enumerate(word):
 
                     #GOOD
-                    if ( letterInGoodPosition.__contains__(indexLetter)):
-                        if (letterInGoodPosition.get(indexLetter) != letter):
-                            deleted= True
-                            break
-                        
+                    if ( letterInGoodPosition.__contains__(indexLetter) and letterInGoodPosition.get(indexLetter) != letter):
+                        deleted= True
+                        break
                 
                     #Regular
-                    elif ( letterInRegularPosition.__contains__(indexLetter)):
-                        if(letterInRegularPosition.get(indexLetter) == letter):
+                    elif ( letterInRegularPosition.__contains__(indexLetter) and letterInRegularPosition.get(indexLetter) == letter):
                             deleted = True
                             break
                     
-                    #TODO Mejorar doble caracter bad, KEY OPERA -> LLAVE, ACEDA, ABAJA
-                    if (letter in listLetterInBadPosition):
-                            if(letter in listLetterInGoodPosition):
-                               if (word.count(letter)  >   listLetterInGoodPosition.count(letter)):
+                    #BAD IF letter exist en bad letter
+                    if (letter in listBadLetter):
+                            #If exist in good letter or regular letter, check if the count of the letter in more than good or regular
+                            if(letter in listGoodLetter or letter in listReguarLetter):
+                               if (word.count(letter)  >   (listGoodLetter.count(letter) or  listReguarLetter.count(letter))):
                                 deleted = True
                                 break
-                            elif(letter in regularLetterList):
-                                if (word.count(letter)  >   regularLetterList.count(letter)):
-                                    deleted = True
-                                    break
+                            #Else, means that the letter doens't exist in the good or regular list
                             else:
                                 deleted  = True
                                 break
-                                
-
-                        
-                    
-                for rword in regularLetterList:
+                               
+                # To check if the any regular letter that must apper, doesn't in the word. In this case delete
+                for rword in listReguarLetter:
                     if not rword in word:
                         deleted = True
                         break

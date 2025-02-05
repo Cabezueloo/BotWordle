@@ -21,3 +21,6 @@ Este bot está diseñado para ayudarte a resolver el juego de **Wodle**. Actualm
 5. **Repite el proceso**: Cada vez que ingreses el resultado (usando las letras `g`, `r` o `b`), el bot ajustará su selección y te ayudará a encontrar la palabra correcta.
 
 ¡Con este proceso, podrás encontrar la palabra objetivo más rápidamente!
+
+Video demostración:
+https://github.com/user-attachments/assets/b13e3d5e-259f-4f97-807e-f07004003161
