@@ -1,4 +1,4 @@
-# Bot para Resolver el Juego de Wodle
+# Bot para Resolver el Juego de Wordle
 
 Este bot está diseñado para ayudarte a resolver el juego de **Wodle**. Actualmente, cuenta con dos diccionarios:
 
